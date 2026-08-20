@@ -1,0 +1,5 @@
+# Protect the public site and every control that can change its deployment.
+/.github/ @iiseng
+/web/service-flow/ @iiseng
+/scripts/ @iiseng
+/README.md @iiseng
