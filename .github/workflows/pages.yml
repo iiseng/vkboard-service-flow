@@ -8,6 +8,13 @@ on:
       - "scripts/check_service_flow_site.py"
       - "scripts/check_tracked_secrets.py"
       - "web/service-flow/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/pages.yml"
+      - "scripts/check_service_flow_site.py"
+      - "scripts/check_tracked_secrets.py"
+      - "web/service-flow/**"
   workflow_dispatch:
 
 permissions:
@@ -41,7 +48,7 @@ jobs:
 
   deploy:
     name: Deploy reviewed main to GitHub Pages
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
