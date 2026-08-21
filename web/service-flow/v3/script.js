@@ -1,4 +1,5 @@
 (() => {
+  const intro = document.querySelector(".intro-screen[data-stage]");
   const stages = [...document.querySelectorAll(".pipeline-stage[data-stage]")];
   const revealItems = [...document.querySelectorAll(".pipeline-stage")];
   const progressBar = document.querySelector("#reading-progress-bar");
@@ -108,7 +109,7 @@
     },
   ];
 
-  let activeStage = -1;
+  let activeStage = -2;
   let detailsOrigin = null;
   let progressFrame = 0;
 
@@ -152,6 +153,7 @@
   );
 
   revealItems.forEach((stage) => revealObserver.observe(stage));
+  if (intro) stageObserver.observe(intro);
   stages.forEach((stage) => stageObserver.observe(stage));
 
   const closeDetails = () => {
@@ -200,8 +202,7 @@
   window.addEventListener("resize", requestProgressUpdate, { passive: true });
   updateProgress();
 
-  if (stages[0]) {
-    stages[0].classList.add("is-visible");
-    setActiveStage(stages[0]);
-  }
+  if (stages[0]) stages[0].classList.add("is-visible");
+  if (intro) setActiveStage(intro);
+  else if (stages[0]) setActiveStage(stages[0]);
 })();
