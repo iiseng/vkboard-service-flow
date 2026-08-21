@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'none'; connect-src 'none'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      name="description"
+      content="Один непрерывный путь информации через сервис vkboard — от поста во ВКонтакте до проверяемого аналитического вывода."
+    />
+    <meta name="theme-color" content="#fff8e8" />
+    <title>Как работает vkboard — путь информации</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#stage-1">Перейти к первому этапу</a>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="vkboard — к началу страницы">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>vkboard</span>
+      </a>
+      <p class="header-stage" aria-live="polite">
+        <span id="header-stage-number">01</span>
+        <strong id="header-stage-name">Находим сигнал</strong>
+      </p>
+      <p class="header-source"><i aria-hidden="true"></i> ВКонтакте</p>
+      <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+    </header>
+
+    <main id="top">
+      <div class="pipeline-world">
+        <div class="world-texture" aria-hidden="true"></div>
+        <div class="route-line" aria-hidden="true"></div>
+
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="kicker">Демонстрационный кейс · рынок новостроек</p>
+            <h1 id="hero-title">Проследим путь <em>одного поста</em></h1>
+            <p class="hero-lead">
+              Не перелистываем презентацию — движемся по одному информационному
+              полю. По мере прокрутки пост очищается, получает смысл, находит
+              связанные события и превращается в проверяемый вывод.
+            </p>
+            <a class="start-link" href="#stage-1">
+              <span>Начать путь</span><i aria-hidden="true">↓</i>
+            </a>
+          </div>
+
+          <div class="hero-object" aria-hidden="true">
+            <span class="hero-orbit orbit-one"></span>
+            <span class="hero-orbit orbit-two"></span>
+            <span class="hero-spark spark-one"></span>
+            <span class="hero-spark spark-two"></span>
+            <span class="hero-spark spark-three"></span>
+            <article class="seed-card">
+              <span class="seed-icon">VK</span>
+              <p><strong>Пост найден</strong><small>сегодня · 09:42</small></p>
+              <b>Старт</b>
+            </article>
+          </div>
+        </section>
+
+        <nav class="stage-jump" aria-label="Быстрый переход к этапам">
+          <ol>
+            <li><a href="#stage-1"><span>01</span>Поле</a></li>
+            <li><a href="#stage-2"><span>02</span>Материал</a></li>
+            <li><a href="#stage-3"><span>03</span>Смысл</a></li>
+            <li><a href="#stage-4"><span>04</span>Событие</a></li>
+            <li><a href="#stage-5"><span>05</span>Картина</a></li>
+            <li><a href="#stage-6"><span>06</span>Вывод</a></li>
+          </ol>
+        </nav>
+
+        <section class="pipeline-stage stage-field" id="stage-1" data-stage="0" data-stage-name="Находим сигнал">
+          <span class="route-node" aria-hidden="true">01</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>01 / 06</span> Информационное поле</p>
+              <h2>Сначала видим <em>не ответ, а поле</em></h2>
+              <p class="stage-lead">
+                Сервис собирает поисковые совпадения по теме и периоду. Среди
+                десятков тысяч записей мы выбираем один пост и начинаем следить
+                за ним дальше.
+              </p>
+              <dl class="single-metric">
+                <dt>74 158</dt>
+                <dd>поисковых совпадений в исследовании</dd>
+              </dl>
+              <button class="explain-button" type="button" data-details="0" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как сервис собирает поле?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual field-visual reveal-item" aria-hidden="true">
+              <div class="candidate-cloud">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <p class="visual-note">Один сигнал остаётся подсвеченным</p>
+              <article class="growth-card state-signal">
+                <span class="growth-orbit"></span><span class="growth-spark"></span>
+                <span class="growth-icon">VK</span>
+                <p><strong>Пост найден</strong><small>сегодня · 09:42</small></p>
+                <b>Сигнал</b>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="pipeline-stage stage-material" id="stage-2" data-stage="1" data-stage-name="Получаем материал">
+          <span class="route-node" aria-hidden="true">02</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>02 / 06</span> Очистка и отбор</p>
+              <h2>Шум складывается в <em>один материал</em></h2>
+              <p class="stage-lead">
+                Текст очищается, проверяется на связь с темой, а точные повторы
+                объединяются. При этом история распространения не исчезает.
+              </p>
+              <ul class="result-pills" aria-label="Результат этапа">
+                <li>релевантно теме</li><li>1 уникальный материал</li>
+                <li>5 размещений</li><li>4 источника</li>
+              </ul>
+              <button class="explain-button" type="button" data-details="1" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как очищается материал?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual material-visual reveal-item" aria-hidden="true">
+              <article class="echo-card echo-a"><i></i><i></i><i></i></article>
+              <article class="echo-card echo-b"><i></i><i></i><i></i></article>
+              <article class="echo-card echo-c"><i></i><i></i><i></i></article>
+              <div class="merge-ring"><span>повторы вместе</span></div>
+              <article class="growth-card state-material">
+                <span class="growth-orbit"></span><span class="growth-spark"></span>
+                <span class="growth-icon">VK</span>
+                <p><strong>Один материал</strong><small>5 размещений · 4 источника</small></p>
+                <b>Релевантно</b>
+              </article>
+              <p class="visual-note">Пять размещений ≠ пять разных фактов</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pipeline-stage stage-meaning" id="stage-3" data-stage="2" data-stage-name="Добавляем смысл">
+          <span class="route-node" aria-hidden="true">03</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>03 / 06</span> Смысловой разбор</p>
+              <h2>Материал обрастает <em>контекстом</em></h2>
+              <p class="stage-lead">
+                Теперь понятно, о чём текст, кого он касается и почему важен для
+                исследования. Это уже не набор слов, а часть темы.
+              </p>
+              <p class="meaning-summary">Тема · аудитория · объект · контекст</p>
+              <button class="explain-button" type="button" data-details="2" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как сервис понимает смысл?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual meaning-visual reveal-item" aria-hidden="true">
+              <span class="context-tag tag-a">Ипотека</span>
+              <span class="context-tag tag-b">Покупатели жилья</span>
+              <span class="context-tag tag-c">Москва</span>
+              <span class="context-tag tag-d">Доступность покупки</span>
+              <span class="context-tag tag-e">Анализ рынка</span>
+              <article class="growth-card state-meaning">
+                <span class="growth-orbit"></span><span class="growth-spark"></span>
+                <span class="growth-icon">VK</span>
+                <p><strong>Смысл добавлен</strong><small>4 признака контекста</small></p>
+                <b>Осмыслено</b>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="pipeline-stage stage-event" id="stage-4" data-stage="3" data-stage-name="Собираем событие">
+          <span class="route-node" aria-hidden="true">04</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>04 / 06</span> Семантический кластер</p>
+              <h2>Разные тексты становятся <em>одним событием</em></h2>
+              <p class="stage-lead">
+                Другие источники рассказывают о том же своими словами. Сервис
+                находит связь и собирает самостоятельный инфоповод.
+              </p>
+              <div class="event-metrics" aria-label="Состав демонстрационного инфоповода">
+                <p><strong>8</strong><span>материалов</span></p>
+                <p><strong>17</strong><span>размещений</span></p>
+                <p><strong>11</strong><span>источников</span></p>
+              </div>
+              <button class="explain-button" type="button" data-details="3" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как собирается инфоповод?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual event-visual reveal-item" aria-hidden="true">
+              <article class="source-card source-a"><span>Медиа</span><strong>Спрос на ипотеку охлаждается</strong></article>
+              <article class="source-card source-b"><span>Эксперт</span><strong>Одобрение кредита стало сложнее</strong></article>
+              <article class="source-card source-c"><span>Сообщество</span><strong>Покупатели обсуждают отказы</strong></article>
+              <span class="event-link link-a"></span><span class="event-link link-b"></span><span class="event-link link-c"></span>
+              <article class="growth-card state-event">
+                <span class="growth-orbit"></span><span class="growth-spark"></span>
+                <span class="growth-icon">VK</span>
+                <p><strong>Часть события</strong><small>8 материалов рядом</small></p>
+                <b>Инфоповод</b>
+              </article>
+              <p class="event-title"><span>Инфоповод</span> Банки стали чаще отказывать покупателям в ипотеке</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pipeline-stage stage-map" id="stage-5" data-stage="4" data-stage-name="Видим картину">
+          <span class="route-node" aria-hidden="true">05</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>05 / 06</span> Общая повестка</p>
+              <h2>Событие находит место <em>на большой карте</em></h2>
+              <p class="stage-lead">
+                Камера отъезжает. Один инфоповод становится узлом смыслового
+                направления, но исходный материал всё ещё можно найти.
+              </p>
+              <div class="scale-chain" aria-label="Масштаб исследования">
+                <span><strong>74 158</strong>совпадений</span><i>→</i>
+                <span><strong>1 000</strong>материалов</span><i>→</i>
+                <span><strong>287</strong>инфоповодов</span>
+              </div>
+              <button class="explain-button" type="button" data-details="4" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как строится общая картина?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual map-visual reveal-item" aria-hidden="true">
+              <div class="agenda-island island-trust"><strong>Доверие</strong><i></i><i></i><i></i></div>
+              <div class="agenda-island island-access"><strong>Доступность покупки</strong><i></i><i></i><i></i><i></i></div>
+              <div class="agenda-island island-future"><strong>Будущая среда</strong><i></i><i></i><i></i></div>
+              <article class="growth-card state-map">
+                <span class="growth-orbit"></span><span class="growth-icon">VK</span>
+              </article>
+              <p class="visual-note">Наш материал всё ещё здесь</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pipeline-stage stage-insight" id="stage-6" data-stage="5" data-stage-name="Получаем вывод">
+          <span class="route-node" aria-hidden="true">06</span>
+          <div class="stage-inner">
+            <div class="stage-copy reveal-item">
+              <p class="stage-kicker"><span>06 / 06</span> Проверяемый результат</p>
+              <h2>Картина превращается в <em>понятное действие</em></h2>
+              <p class="stage-lead">
+                Итог связывает наблюдение, его смысл для задачи и следующий шаг.
+                Рядом остаются источники, поэтому вывод можно проверить.
+              </p>
+              <p class="proof-badge"><i aria-hidden="true">✓</i><span><strong>Доказательная база</strong>Источник вывода сохранён</span></p>
+              <button class="explain-button" type="button" data-details="5" aria-haspopup="dialog" aria-controls="stage-details">
+                <span class="explain-icon" aria-hidden="true">i</span>
+                <span><strong>Как формируется итоговый вывод?</strong><small>Открыть объяснение этапа</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            </div>
+
+            <div class="stage-visual insight-visual reveal-item">
+              <ol class="insight-flow">
+                <li><span>Что происходит</span><strong>Покупателей волнует не только цена, но и доступность всей покупки.</strong></li>
+                <li><span>Что это значит</span><strong>Цена за метр не отвечает на главный вопрос покупателя.</strong></li>
+                <li><span>Что с этим делать</span><strong>Показывать взнос, платёж и сценарии для разных бюджетов.</strong></li>
+              </ol>
+              <article class="growth-card state-proof">
+                <span class="growth-orbit"></span><span class="growth-spark"></span>
+                <span class="growth-icon">VK</span>
+                <p><strong>Источник сохранён</strong><small>вывод можно проверить</small></p>
+                <b>Доказательство</b>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="finish" aria-labelledby="finish-title">
+          <p class="kicker">Финал маршрута</p>
+          <h2 id="finish-title">Не чёрный ящик, а <em>видимая цепочка</em></h2>
+          <p>
+            Любой вывод можно развернуть обратно: до инфоповода, материала,
+            размещения и исходного поста во ВКонтакте.
+          </p>
+          <ol class="trace-chain">
+            <li><span>01</span>Вывод</li><li><span>02</span>Картина</li>
+            <li><span>03</span>Инфоповод</li><li><span>04</span>Материал</li>
+            <li><span>05</span>Пост во ВКонтакте</li>
+          </ol>
+          <a href="#top" class="to-top">Пройти путь ещё раз <span aria-hidden="true">↑</span></a>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>vkboard</span></a>
+      <p>Информационное поле ВКонтакте → проверяемый аналитический результат</p>
+      <p>Демонстрационный кейс · числа условные</p>
+    </footer>
+
+    <dialog class="details-dialog" id="stage-details" aria-labelledby="details-title">
+      <section class="dialog-panel">
+        <header class="dialog-header">
+          <p><span id="details-step">Этап 01</span><strong>Как это работает</strong></p>
+          <button class="dialog-close" type="button" aria-label="Закрыть объяснение"><span aria-hidden="true">×</span></button>
+        </header>
+        <div class="dialog-content">
+          <h2 id="details-title">Сервис формирует поле кандидатов</h2>
+          <p class="dialog-lead" id="details-lead"></p>
+          <div class="dialog-transform" aria-label="Преобразование на этапе">
+            <span><small>На входе</small><strong id="details-input"></strong></span>
+            <i aria-hidden="true">→</i>
+            <span><small>На выходе</small><strong id="details-output"></strong></span>
+          </div>
+          <ul class="dialog-points" id="details-points"></ul>
+          <p class="dialog-note" id="details-note"></p>
+        </div>
+      </section>
+    </dialog>
+  </body>
+</html>
