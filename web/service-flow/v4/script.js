@@ -31,6 +31,7 @@
   const detailsPoints = document.querySelector("#details-points");
   const detailsNote = document.querySelector("#details-note");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const compactMobile = window.matchMedia("(max-width: 760px)");
 
   const shortStageNames = ["Поле", "Материал", "Смысл", "Событие", "Картина", "Вывод"];
 
@@ -238,13 +239,17 @@
     stagePanels.forEach((panel, panelIndex) => {
       const distance = panelIndex - travelPosition;
       const absoluteDistance = Math.abs(distance);
+      const isCurrentPanel = panelIndex === stageIndex;
       const opacity = reducedMotion.matches
-        ? Number(panelIndex === stageIndex)
-        : 1 - smoothstep(0.12, 0.46, absoluteDistance);
+        ? Number(isCurrentPanel)
+        : compactMobile.matches
+          ? Number(isCurrentPanel) * (1 - smoothstep(0.18, 0.5, absoluteDistance))
+          : 1 - smoothstep(0.12, 0.46, absoluteDistance);
+      const scaleStrength = compactMobile.matches ? 0.04 : 0.12;
       const scale = distance < 0
-        ? 1 + Math.min(absoluteDistance, 1) * 0.12
-        : 1 - Math.min(absoluteDistance, 1) * 0.08;
-      const shift = clamp(distance, -1, 1) * 140;
+        ? 1 + Math.min(absoluteDistance, 1) * scaleStrength
+        : 1 - Math.min(absoluteDistance, 1) * (compactMobile.matches ? 0.03 : 0.08);
+      const shift = clamp(distance, -1, 1) * (compactMobile.matches ? 70 : 140);
 
       panel.style.setProperty("--panel-opacity", opacity.toFixed(4));
       panel.style.setProperty("--panel-scale", scale.toFixed(4));
@@ -255,15 +260,17 @@
   const updateChambers = (travelPosition) => {
     chamberGates.forEach((gate, gateIndex) => {
       const distance = gateIndex - travelPosition;
+      const maximumAhead = compactMobile.matches ? 1.15 : 2.3;
+      const maximumPassed = compactMobile.matches ? -0.58 : -0.72;
       let scale = 0.1;
       let opacity = 0;
 
-      if (distance >= 0 && distance <= 2.3) {
+      if (distance >= 0 && distance <= maximumAhead) {
         scale = 1 / (1 + distance * 1.65);
         opacity = clamp(0.62 - distance * 0.23, 0.08, 0.62);
-      } else if (distance < 0 && distance > -0.72) {
+      } else if (distance < 0 && distance > maximumPassed) {
         const passed = -distance;
-        scale = 1 + passed * 3.6;
+        scale = 1 + passed * (compactMobile.matches ? 2.4 : 3.6);
         opacity = clamp(0.62 - passed * 1.1, 0, 0.62);
       }
 
@@ -282,8 +289,12 @@
   const updateTunnelRings = (journeyRatio) => {
     const ringTravel = journeyRatio * 12;
     tunnelRings.forEach((ring, ringIndex) => {
-      const cycle = (ringTravel + ringIndex / tunnelRings.length) % 1;
-      const scale = 0.18 + cycle * 3.05;
+      if (compactMobile.matches && ringIndex > 1) return;
+      const visibleRingCount = compactMobile.matches ? 2 : tunnelRings.length;
+      const cycle = (ringTravel + ringIndex / visibleRingCount) % 1;
+      const scale = compactMobile.matches
+        ? 0.28 + cycle * 2.1
+        : 0.18 + cycle * 3.05;
       const visibility = Math.sin(Math.PI * cycle) * 0.82;
       const alpha = 0.18 + (1 - cycle) * 0.52;
       const turn = journeyRatio * 150 + ringIndex * 17;
@@ -323,7 +334,7 @@
     const distanceToStage = Math.abs(travelPosition - stageIndex);
     const transitionEnergy = Math.sin(distanceToStage * Math.PI);
     const coreContentOpacity = 1 - smoothstep(0.23, 0.49, distanceToStage);
-    const coreScale = 0.94 + transitionEnergy * 0.16;
+    const coreScale = 0.94 + transitionEnergy * (compactMobile.matches ? 0.06 : 0.16);
     const cameraCycle = Math.sin(journeyRatio * Math.PI * 12) ** 2;
 
     transitionStatus.textContent =
@@ -416,6 +427,7 @@
   window.addEventListener("scroll", requestSceneUpdate, { passive: true });
   window.addEventListener("resize", requestSceneUpdate, { passive: true });
   reducedMotion.addEventListener?.("change", requestSceneUpdate);
+  compactMobile.addEventListener?.("change", requestSceneUpdate);
   setStage(0);
   setHeaderIntro();
   updateScene();
