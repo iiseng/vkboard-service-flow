@@ -18,6 +18,9 @@
   const coreTitle = document.querySelector("#core-title");
   const coreMeta = document.querySelector("#core-meta");
   const coreChange = document.querySelector("#core-change");
+  const dataCore = document.querySelector(".data-core");
+  const coreCard = document.querySelector(".core-card");
+  const coreChangeBlock = document.querySelector(".core-change");
   const nextStageName = document.querySelector("#next-stage-name");
   const transitionStatus = document.querySelector("#transition-status");
   const detailsDialog = document.querySelector("#stage-details");
@@ -182,6 +185,10 @@
   let activeStage = -1;
   let detailsOrigin = null;
   let updateFrame = 0;
+  let coreLayoutFrame = 0;
+
+  const MOBILE_CORE_GAP = 24;
+  const MOBILE_CORE_EDGE = 16;
 
   const clamp = (value, minimum, maximum) =>
     Math.max(minimum, Math.min(maximum, value));
@@ -189,6 +196,44 @@
   const smoothstep = (start, end, value) => {
     const progress = clamp((value - start) / (end - start), 0, 1);
     return progress * progress * (3 - 2 * progress);
+  };
+
+  const updateMobileCoreClearance = (index = activeStage) => {
+    if (!scene || !dataCore) return;
+    scene.style.removeProperty("--mobile-core-top");
+    if (!compactMobile.matches || index < 0) return;
+
+    const detailsButton = stagePanels[index]?.querySelector(".details-button");
+    if (!detailsButton || !coreCard || !coreChangeBlock) return;
+
+    const sceneRect = scene.getBoundingClientRect();
+    const buttonRect = detailsButton.getBoundingClientRect();
+    const coreRect = coreCard.getBoundingClientRect();
+    const changeRect = coreChangeBlock.getBoundingClientRect();
+    const currentGap = coreRect.top - buttonRect.bottom;
+    if (currentGap >= MOBILE_CORE_GAP) return;
+
+    const safeBottom = Number.parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--safe-bottom"),
+    ) || 0;
+    const requiredShift = MOBILE_CORE_GAP - currentGap;
+    const availableShift = Math.max(
+      0,
+      sceneRect.bottom - safeBottom - MOBILE_CORE_EDGE - changeRect.bottom,
+    );
+    const appliedShift = Math.min(requiredShift, availableShift);
+    scene.style.setProperty(
+      "--mobile-core-top",
+      `${(dataCore.offsetTop + appliedShift).toFixed(2)}px`,
+    );
+  };
+
+  const requestMobileCoreClearance = (index = activeStage) => {
+    if (coreLayoutFrame) window.cancelAnimationFrame(coreLayoutFrame);
+    coreLayoutFrame = window.requestAnimationFrame(() => {
+      coreLayoutFrame = 0;
+      updateMobileCoreClearance(index);
+    });
   };
 
   const setHeaderIntro = () => {
@@ -233,6 +278,8 @@
       const button = item.querySelector("button");
       if (button) button.setAttribute("aria-current", itemIndex === index ? "step" : "false");
     });
+
+    requestMobileCoreClearance(index);
   };
 
   const updatePanels = (travelPosition, stageIndex) => {
@@ -429,9 +476,15 @@
   });
 
   window.addEventListener("scroll", requestSceneUpdate, { passive: true });
-  window.addEventListener("resize", requestSceneUpdate, { passive: true });
+  const handleSceneResize = () => {
+    requestSceneUpdate();
+    requestMobileCoreClearance();
+  };
+
+  window.addEventListener("resize", handleSceneResize, { passive: true });
+  window.visualViewport?.addEventListener("resize", handleSceneResize, { passive: true });
   reducedMotion.addEventListener?.("change", requestSceneUpdate);
-  compactMobile.addEventListener?.("change", requestSceneUpdate);
+  compactMobile.addEventListener?.("change", handleSceneResize);
   setStage(0);
   setHeaderIntro();
   updateScene();
