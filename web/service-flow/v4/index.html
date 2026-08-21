@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'none'; connect-src 'none'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      name="description"
+      content="Интерактивное погружение в аналитический конвейер vkboard: от одного поста до проверяемого вывода."
+    />
+    <meta name="theme-color" content="#050817" />
+    <title>Внутри vkboard — путь информации в глубину</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#stage-1">Перейти к первому этапу</a>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="vkboard — к началу страницы">
+        <span class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>vkboard</span>
+        <small>inside</small>
+      </a>
+      <p class="live-stage" aria-live="polite">
+        <span id="live-stage-number">00</span>
+        <strong id="live-stage-name">Перед погружением</strong>
+      </p>
+      <p class="system-status"><i aria-hidden="true"></i> Система готова</p>
+      <div class="page-progress" aria-hidden="true"><span id="page-progress-bar"></span></div>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-grid" aria-hidden="true"></div>
+        <div class="intro-aurora aurora-one" aria-hidden="true"></div>
+        <div class="intro-aurora aurora-two" aria-hidden="true"></div>
+
+        <div class="intro-copy">
+          <p class="eyebrow"><span>00</span> Интерактивная схема сервиса</p>
+          <h1 id="intro-title">
+            <span>Войдите внутрь</span>
+            <em>информационного</em>
+            <span>потока</span>
+          </h1>
+          <p class="intro-lead">
+            Проследите, как один пост проходит через аналитическую систему и
+            становится выводом, который можно проверить.
+          </p>
+
+          <div class="intro-actions">
+            <a class="primary-action" href="#stage-1">
+              <span>Начать погружение</span>
+              <i aria-hidden="true">↓</i>
+            </a>
+            <p><strong>Листайте вниз</strong> — движение пойдёт вперёд, в глубину системы.</p>
+          </div>
+
+          <ul class="intro-facts" aria-label="Формат истории">
+            <li><strong>1</strong><span>пост в центре</span></li>
+            <li><strong>6</strong><span>превращений</span></li>
+            <li><strong>2 мин</strong><span>на весь путь</span></li>
+          </ul>
+        </div>
+
+        <div class="intro-portal" aria-label="Маршрут одного поста через шесть этапов">
+          <div class="portal-depth" aria-hidden="true">
+            <span class="portal-ring ring-a"></span>
+            <span class="portal-ring ring-b"></span>
+            <span class="portal-ring ring-c"></span>
+            <span class="portal-ring ring-d"></span>
+            <span class="portal-ray ray-a"></span>
+            <span class="portal-ray ray-b"></span>
+            <span class="portal-ray ray-c"></span>
+            <span class="portal-ray ray-d"></span>
+            <i class="portal-dot dot-a"></i><i class="portal-dot dot-b"></i>
+            <i class="portal-dot dot-c"></i><i class="portal-dot dot-d"></i>
+          </div>
+          <div class="intro-core">
+            <span class="core-source">VK</span>
+            <p><small>Объект маршрута</small><strong>Один пост</strong></p>
+            <b>Вход</b>
+          </div>
+          <ol class="intro-route">
+            <li><span>01</span>Поле</li>
+            <li><span>02</span>Материал</li>
+            <li><span>03</span>Смысл</li>
+            <li><span>04</span>Событие</li>
+            <li><span>05</span>Картина</li>
+            <li><span>06</span>Вывод</li>
+          </ol>
+          <p class="portal-caption"><i aria-hidden="true"></i> Маршрут выстроен</p>
+        </div>
+
+        <div class="intro-promise">
+          <span aria-hidden="true">i</span>
+          <p><strong>Без чёрного ящика</strong> На каждом этапе видно, что изменилось и зачем это нужно.</p>
+        </div>
+      </section>
+
+      <section class="journey" id="journey" aria-label="Шесть этапов пути информации">
+        <div class="tunnel-scene" id="tunnel-scene" data-active-stage="0">
+          <div class="scene-grid" aria-hidden="true"></div>
+          <div class="space-dust" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+
+          <div class="tunnel" aria-hidden="true">
+            <span class="tunnel-ring tunnel-ring-1"></span>
+            <span class="tunnel-ring tunnel-ring-2"></span>
+            <span class="tunnel-ring tunnel-ring-3"></span>
+            <span class="tunnel-ring tunnel-ring-4"></span>
+            <span class="tunnel-ring tunnel-ring-5"></span>
+            <span class="tunnel-line tunnel-line-a"></span>
+            <span class="tunnel-line tunnel-line-b"></span>
+            <span class="tunnel-line tunnel-line-c"></span>
+            <span class="tunnel-line tunnel-line-d"></span>
+            <div class="semantic-orbit orbit-a"></div>
+            <div class="semantic-orbit orbit-b"></div>
+            <div class="semantic-orbit orbit-c"></div>
+          </div>
+
+          <nav class="depth-nav" aria-label="Этапы погружения">
+            <p><span>Глубина</span><strong id="depth-readout">01 / 06</strong></p>
+            <ol>
+              <li><button type="button" data-jump="0" aria-label="Перейти к этапу 1: Поле"><span>01</span><i></i><b>Поле</b></button></li>
+              <li><button type="button" data-jump="1" aria-label="Перейти к этапу 2: Материал"><span>02</span><i></i><b>Материал</b></button></li>
+              <li><button type="button" data-jump="2" aria-label="Перейти к этапу 3: Смысл"><span>03</span><i></i><b>Смысл</b></button></li>
+              <li><button type="button" data-jump="3" aria-label="Перейти к этапу 4: Событие"><span>04</span><i></i><b>Событие</b></button></li>
+              <li><button type="button" data-jump="4" aria-label="Перейти к этапу 5: Картина"><span>05</span><i></i><b>Картина</b></button></li>
+              <li><button type="button" data-jump="5" aria-label="Перейти к этапу 6: Вывод"><span>06</span><i></i><b>Вывод</b></button></li>
+            </ol>
+          </nav>
+
+          <div class="stage-interface">
+            <article class="stage-panel is-active" data-stage-panel="0">
+              <p class="stage-kicker"><span>01 / 06</span> Вход в поле</p>
+              <h2>В шуме появляется <em>нужный сигнал</em></h2>
+              <p class="stage-lead">
+                Сервис собирает записи по теме и периоду. Один найденный пост
+                становится нашим проводником по всей системе.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>Из 74 158 совпадений выделен один кандидат</strong></p>
+              <button class="details-button" type="button" data-details="0" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Что сервис собирает и что пока не считает результатом</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+
+            <article class="stage-panel" data-stage-panel="1">
+              <p class="stage-kicker"><span>02 / 06</span> Очистка и отбор</p>
+              <h2>Повторы сходятся в <em>один материал</em></h2>
+              <p class="stage-lead">
+                Текст очищается и проверяется на связь с темой. Точные копии
+                объединяются, но история их размещения остаётся видимой.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>5 размещений → 1 уникальный материал</strong></p>
+              <button class="details-button" type="button" data-details="1" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Как отделяются копии, материалы и нерелевантный шум</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+
+            <article class="stage-panel" data-stage-panel="2">
+              <p class="stage-kicker"><span>03 / 06</span> Смысловой разбор</p>
+              <h2>Материал получает <em>контекст</em></h2>
+              <p class="stage-lead">
+                Сервис понимает, о чём текст, кого он касается и почему важен
+                для исследования. Теперь это не просто набор слов.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>Добавлены тема, аудитория, объект и контекст</strong></p>
+              <button class="details-button" type="button" data-details="2" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Как смысл раскладывается на проверяемые признаки</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+
+            <article class="stage-panel" data-stage-panel="3">
+              <p class="stage-kicker"><span>04 / 06</span> Событийный узел</p>
+              <h2>Разные тексты собираются <em>в одно событие</em></h2>
+              <p class="stage-lead">
+                Другие источники рассказывают о том же своими словами. Сервис
+                находит смысловую связь и формирует самостоятельный инфоповод.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>8 материалов образовали один инфоповод</strong></p>
+              <button class="details-button" type="button" data-details="3" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Почему событие — не то же самое, что отдельное размещение</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+
+            <article class="stage-panel" data-stage-panel="4">
+              <p class="stage-kicker"><span>05 / 06</span> Картина темы</p>
+              <h2>Камера отъезжает: видна <em>вся повестка</em></h2>
+              <p class="stage-lead">
+                Инфоповод занимает место среди смысловых направлений. Мы видим
+                общую структуру темы и не теряем исходный материал.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>1 000 материалов → 287 инфоповодов на карте</strong></p>
+              <button class="details-button" type="button" data-details="4" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Как строится общая картина без смешения метрик</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+
+            <article class="stage-panel" data-stage-panel="5">
+              <p class="stage-kicker"><span>06 / 06</span> Проверяемый результат</p>
+              <h2>Система собирает <em>вывод с доказательствами</em></h2>
+              <p class="stage-lead">
+                Наблюдение превращается в понятный смысл и следующий шаг. Рядом
+                остаются материалы, поэтому путь можно пройти в обратную сторону.
+              </p>
+              <p class="stage-result"><span>Что изменилось</span><strong>Картина темы → вывод, который можно проверить</strong></p>
+              <button class="details-button" type="button" data-details="5" aria-haspopup="dialog" aria-controls="stage-details">
+                <span aria-hidden="true">i</span>
+                <p><strong>Понять технологию этапа</strong><small>Как вывод связывается с источниками и ограничениями</small></p>
+                <i aria-hidden="true">→</i>
+              </button>
+            </article>
+          </div>
+
+          <div class="data-core" aria-hidden="true">
+            <span class="core-aura"></span>
+            <span class="core-orbit core-orbit-a"></span>
+            <span class="core-orbit core-orbit-b"></span>
+            <div class="core-satellites">
+              <span>сигнал</span><span>период</span><span>источник</span>
+              <span>тема</span><span>контекст</span><span>связи</span>
+            </div>
+            <article class="core-card">
+              <header><span id="core-index">01</span><b id="core-status">Сигнал обнаружен</b></header>
+              <div class="core-card-body">
+                <span class="core-card-icon">VK</span>
+                <p><small id="core-label">Объект маршрута</small><strong id="core-title">Пост найден</strong><em id="core-meta">сегодня · 09:42</em></p>
+              </div>
+              <div class="core-scan"><i></i></div>
+            </article>
+            <p class="core-change"><span>Текущее состояние</span><strong id="core-change">Поисковое совпадение</strong></p>
+          </div>
+
+          <p class="scroll-cue"><span aria-hidden="true">↓</span><strong>Продолжайте листать</strong><small>движение идёт в глубину</small></p>
+        </div>
+
+        <div class="depth-track" aria-hidden="true">
+          <div class="depth-step" id="stage-1"></div>
+          <div class="depth-step" id="stage-2"></div>
+          <div class="depth-step" id="stage-3"></div>
+          <div class="depth-step" id="stage-4"></div>
+          <div class="depth-step" id="stage-5"></div>
+          <div class="depth-step" id="stage-6"></div>
+        </div>
+      </section>
+
+      <section class="finish" aria-labelledby="finish-title">
+        <div class="finish-glow" aria-hidden="true"></div>
+        <p class="eyebrow"><span>07</span> Выход из системы</p>
+        <h2 id="finish-title">Из потока — <em>в ясную картину</em></h2>
+        <p class="finish-lead">
+          Пост не исчез внутри алгоритма. Он стал частью вывода, а весь маршрут
+          остался видимым — от исходной записи до доказательной базы.
+        </p>
+        <div class="insight-card">
+          <p><span>Что происходит</span><strong>Покупателей волнует не только цена квартиры, но и доступность всей покупки.</strong></p>
+          <i aria-hidden="true">→</i>
+          <p><span>Что это значит</span><strong>Цена за метр не отвечает на главный вопрос покупателя.</strong></p>
+          <i aria-hidden="true">→</i>
+          <p><span>Что с этим делать</span><strong>Показывать взнос, платёж и сценарии для разных бюджетов.</strong></p>
+        </div>
+        <p class="proof-line"><i aria-hidden="true">✓</i><span><strong>Доказательная база сохранена</strong> Вывод можно развернуть до инфоповода, материала и поста во ВКонтакте.</span></p>
+        <a class="restart-link" href="#top"><span>Пройти погружение ещё раз</span><i aria-hidden="true">↑</i></a>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="#top"><span class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span>vkboard</span><small>inside</small></a>
+      <p>От информационного поля к проверяемому аналитическому результату</p>
+      <p>Демонстрационный кейс · числа условные</p>
+    </footer>
+
+    <dialog class="details-dialog" id="stage-details" aria-labelledby="details-title">
+      <section class="dialog-panel">
+        <header class="dialog-header">
+          <p><span id="details-step">Этап 01</span><strong>Внутри технологии</strong></p>
+          <button class="dialog-close" type="button" aria-label="Закрыть объяснение"><span aria-hidden="true">×</span></button>
+        </header>
+        <div class="dialog-content">
+          <h2 id="details-title">Как сервис обрабатывает информацию</h2>
+          <p class="dialog-lead" id="details-lead"></p>
+          <div class="dialog-transform" aria-label="Преобразование на этапе">
+            <span><small>На входе</small><strong id="details-input"></strong></span>
+            <i aria-hidden="true">→</i>
+            <span><small>На выходе</small><strong id="details-output"></strong></span>
+          </div>
+          <ul class="dialog-points" id="details-points"></ul>
+          <p class="dialog-note" id="details-note"></p>
+        </div>
+      </section>
+    </dialog>
+  </body>
+</html>
