@@ -333,6 +333,9 @@
     const stageIndex = clamp(Math.round(travelPosition), 0, stageVisuals.length - 1);
     const distanceToStage = Math.abs(travelPosition - stageIndex);
     const transitionEnergy = Math.sin(distanceToStage * Math.PI);
+    const transitionStatusOpacity = compactMobile.matches
+      ? smoothstep(0.43, 0.49, distanceToStage)
+      : transitionEnergy;
     const coreContentOpacity = 1 - smoothstep(0.23, 0.49, distanceToStage);
     const coreScale = 0.94 + transitionEnergy * (compactMobile.matches ? 0.06 : 0.16);
     const cameraCycle = Math.sin(journeyRatio * Math.PI * 12) ** 2;
@@ -345,6 +348,7 @@
     scene.style.setProperty("--stage-progress", segmentProgress.toFixed(4));
     scene.style.setProperty("--camera-cycle", cameraCycle.toFixed(4));
     scene.style.setProperty("--transition-energy", transitionEnergy.toFixed(4));
+    scene.style.setProperty("--transition-status-opacity", transitionStatusOpacity.toFixed(4));
     scene.style.setProperty("--core-scale", coreScale.toFixed(4));
     scene.style.setProperty("--core-content-opacity", coreContentOpacity.toFixed(4));
 
