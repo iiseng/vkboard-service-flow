@@ -17,6 +17,8 @@ DEFAULT_SITE_ROOT = REPOSITORY_ROOT / "web" / "service-flow"
 V2_SITE_ROOT = DEFAULT_SITE_ROOT / "v2"
 V3_SITE_ROOT = DEFAULT_SITE_ROOT / "v3"
 V4_SITE_ROOT = DEFAULT_SITE_ROOT / "v4"
+APPROVED_TELEGRAM_URL = "https://t.me/iiseng"
+V4_ALLOWED_NAVIGATION_URLS = frozenset({APPROVED_TELEGRAM_URL})
 
 ALLOWED_FILES = {"index.html", "script.js", "styles.css"}
 EXPECTED_ASSETS = {"./script.js", "./styles.css"}
@@ -68,6 +70,7 @@ class _SiteHTMLParser(HTMLParser):
         self.content_security_policies: list[str] = []
         self.disallowed_tags: list[str] = []
         self.event_attributes: list[str] = []
+        self.external_links: list[tuple[str, str, frozenset[str]]] = []
         self.inline_scripts = 0
 
     def handle_starttag(
@@ -88,6 +91,16 @@ class _SiteHTMLParser(HTMLParser):
                 self.assets.add(source)
             else:
                 self.inline_scripts += 1
+        if tag == "a":
+            href = values.get("href") or ""
+            if FORBIDDEN_URL.search(href):
+                self.external_links.append(
+                    (
+                        href,
+                        values.get("target") or "",
+                        frozenset((values.get("rel") or "").split()),
+                    )
+                )
         if (
             tag == "meta"
             and (values.get("http-equiv") or "").lower()
@@ -105,10 +118,32 @@ def _parse_csp(policy: str) -> dict[str, set[str]]:
     return directives
 
 
+def _mask_approved_navigation_urls(
+    content: str, allowed_navigation_urls: frozenset[str]
+) -> str:
+    """Mask only exact approved URLs used as quoted anchor destinations."""
+
+    masked = content
+    for url in allowed_navigation_urls:
+        anchor_href = re.compile(
+            rf"(href\s*=\s*)(?P<quote>[\"']){re.escape(url)}(?P=quote)",
+            re.IGNORECASE,
+        )
+        anchor_tag = re.compile(r"<a\b[^>]*>", re.IGNORECASE)
+        masked = anchor_tag.sub(
+            lambda match, href_pattern=anchor_href: href_pattern.sub(
+                r"\1\"approved-navigation-url\"", match.group(0)
+            ),
+            masked,
+        )
+    return masked
+
+
 def validate_site(
     site_root: Path = DEFAULT_SITE_ROOT,
     *,
     allowed_directories: set[str] | None = None,
+    allowed_navigation_urls: frozenset[str] = frozenset(),
 ) -> list[str]:
     """Return safe-to-print publication issues for ``site_root``."""
 
@@ -158,7 +193,12 @@ def validate_site(
     issues.extend(find_secret_issues(readable_files))
 
     for relative, content in contents.items():
-        if FORBIDDEN_URL.search(content):
+        inspected_content = content
+        if relative == "index.html" and allowed_navigation_urls:
+            inspected_content = _mask_approved_navigation_urls(
+                content, allowed_navigation_urls
+            )
+        if FORBIDDEN_URL.search(inspected_content):
             issues.append(
                 f"{site_root / relative}: external or executable URL is forbidden"
             )
@@ -193,6 +233,35 @@ def validate_site(
         )
     if parser.inline_scripts:
         issues.append(f"{site_root / 'index.html'}: inline scripts are forbidden")
+    external_link_urls = [href for href, _, _ in parser.external_links]
+    for href in external_link_urls:
+        if href not in allowed_navigation_urls:
+            issues.append(
+                f"{site_root / 'index.html'}: external navigation URL is not approved"
+            )
+    for allowed_url in sorted(allowed_navigation_urls):
+        matching_links = [
+            (target, rel)
+            for href, target, rel in parser.external_links
+            if href == allowed_url
+        ]
+        if len(matching_links) != 1:
+            issues.append(
+                f"{site_root / 'index.html'}: approved navigation URL must appear "
+                "exactly once"
+            )
+            continue
+        target, rel = matching_links[0]
+        if target != "_blank":
+            issues.append(
+                f"{site_root / 'index.html'}: approved navigation must open in "
+                "a new tab"
+            )
+        if rel != frozenset({"noopener", "noreferrer"}):
+            issues.append(
+                f"{site_root / 'index.html'}: approved navigation must use "
+                "rel=noopener noreferrer"
+            )
     if len(parser.content_security_policies) != 1:
         issues.append(
             f"{site_root / 'index.html'}: exactly one CSP meta policy is required"
@@ -213,7 +282,12 @@ def main() -> int:
     issues = validate_site(allowed_directories={"v2", "v3", "v4"})
     issues.extend(validate_site(V2_SITE_ROOT))
     issues.extend(validate_site(V3_SITE_ROOT))
-    issues.extend(validate_site(V4_SITE_ROOT))
+    issues.extend(
+        validate_site(
+            V4_SITE_ROOT,
+            allowed_navigation_urls=V4_ALLOWED_NAVIGATION_URLS,
+        )
+    )
     if issues:
         print("Service Flow publication guard failed:")
         for issue in issues:
