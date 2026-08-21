@@ -15,6 +15,7 @@ from scripts.check_tracked_secrets import find_secret_issues
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SITE_ROOT = REPOSITORY_ROOT / "web" / "service-flow"
 V2_SITE_ROOT = DEFAULT_SITE_ROOT / "v2"
+V3_SITE_ROOT = DEFAULT_SITE_ROOT / "v3"
 
 ALLOWED_FILES = {"index.html", "script.js", "styles.css"}
 EXPECTED_ASSETS = {"./script.js", "./styles.css"}
@@ -202,8 +203,9 @@ def validate_site(
 
 
 def main() -> int:
-    issues = validate_site(allowed_directories={"v2"})
+    issues = validate_site(allowed_directories={"v2", "v3"})
     issues.extend(validate_site(V2_SITE_ROOT))
+    issues.extend(validate_site(V3_SITE_ROOT))
     if issues:
         print("Service Flow publication guard failed:")
         for issue in issues:
