@@ -20,6 +20,9 @@ V4_SITE_ROOT = DEFAULT_SITE_ROOT / "v4"
 
 ALLOWED_FILES = {"index.html", "script.js", "styles.css"}
 EXPECTED_ASSETS = {"./script.js", "./styles.css"}
+SAFE_ASSET_REFERENCE = re.compile(
+    r"^\./(?:script\.js|styles\.css)(?:\?v=[a-z0-9-]{1,32})?$"
+)
 MAX_FILE_BYTES = 512 * 1024
 MAX_TOTAL_BYTES = 1024 * 1024
 
@@ -171,7 +174,10 @@ def validate_site(
 
     parser = _SiteHTMLParser()
     parser.feed(html)
-    if parser.assets != EXPECTED_ASSETS:
+    normalized_assets = {asset.split("?", 1)[0] for asset in parser.assets}
+    if normalized_assets != EXPECTED_ASSETS or any(
+        SAFE_ASSET_REFERENCE.fullmatch(asset) is None for asset in parser.assets
+    ):
         issues.append(
             f"{site_root / 'index.html'}: assets must be exactly "
             f"{sorted(EXPECTED_ASSETS)}"
