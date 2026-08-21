@@ -14,6 +14,7 @@ from scripts.check_tracked_secrets import find_secret_issues
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SITE_ROOT = REPOSITORY_ROOT / "web" / "service-flow"
+V2_SITE_ROOT = DEFAULT_SITE_ROOT / "v2"
 
 ALLOWED_FILES = {"index.html", "script.js", "styles.css"}
 EXPECTED_ASSETS = {"./script.js", "./styles.css"}
@@ -99,7 +100,11 @@ def _parse_csp(policy: str) -> dict[str, set[str]]:
     return directives
 
 
-def validate_site(site_root: Path = DEFAULT_SITE_ROOT) -> list[str]:
+def validate_site(
+    site_root: Path = DEFAULT_SITE_ROOT,
+    *,
+    allowed_directories: set[str] | None = None,
+) -> list[str]:
     """Return safe-to-print publication issues for ``site_root``."""
 
     issues: list[str] = []
@@ -108,9 +113,18 @@ def validate_site(site_root: Path = DEFAULT_SITE_ROOT) -> list[str]:
     if site_root.is_symlink():
         issues.append(f"{site_root}: site directory must not be a symlink")
 
-    entries = sorted(site_root.rglob("*"))
+    allowed_directories = allowed_directories or set()
+    entries = sorted(site_root.iterdir())
     symlinks = [path for path in entries if path.is_symlink()]
     issues.extend(f"{path}: symlinks are forbidden" for path in symlinks)
+
+    directories = {
+        path.name for path in entries if path.is_dir() and not path.is_symlink()
+    }
+    for unexpected in sorted(directories - allowed_directories):
+        issues.append(f"{site_root / unexpected}: directory is not approved")
+    for missing in sorted(allowed_directories - directories):
+        issues.append(f"{site_root / missing}: approved directory is missing")
 
     files = [path for path in entries if path.is_file() and not path.is_symlink()]
     relative_files = {path.relative_to(site_root).as_posix() for path in files}
@@ -188,7 +202,8 @@ def validate_site(site_root: Path = DEFAULT_SITE_ROOT) -> list[str]:
 
 
 def main() -> int:
-    issues = validate_site()
+    issues = validate_site(allowed_directories={"v2"})
+    issues.extend(validate_site(V2_SITE_ROOT))
     if issues:
         print("Service Flow publication guard failed:")
         for issue in issues:
