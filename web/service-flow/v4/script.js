@@ -238,7 +238,7 @@
 
   const setHeaderIntro = () => {
     headerNumber.textContent = "00";
-    headerName.textContent = "Перед погружением";
+    headerName.textContent = "Исследование для бизнеса";
   };
 
   const setHeaderFinish = () => {
