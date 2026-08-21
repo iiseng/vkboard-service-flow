@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'none'; connect-src 'none'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      name="description"
+      content="Путь одного поста во ВКонтакте — от поискового совпадения до проверяемого аналитического вывода vkboard."
+    />
+    <meta name="theme-color" content="#fff7e6" />
+    <title>Как работает vkboard — путешествие одной публикации</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body data-stage="0" data-direction="next">
+    <a class="skip-link" href="#journey">Перейти к истории</a>
+
+    <header class="site-header">
+      <a class="brand" href="#journey" aria-label="vkboard — к началу истории">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>vkboard</span>
+      </a>
+      <p class="header-note">Путешествие информации</p>
+      <p class="header-source"><span aria-hidden="true"></span> Источник · ВКонтакте</p>
+    </header>
+
+    <main>
+      <section class="journey" id="journey" aria-labelledby="journey-title">
+        <div class="journey-shell">
+          <div class="journey-topline">
+            <div>
+              <p class="route-kicker">Демонстрационный кейс</p>
+              <p class="route-topic">Рынок новостроек</p>
+            </div>
+            <p class="route-counter" aria-live="polite">
+              <span id="stage-number">01</span><i>/</i>06
+            </p>
+          </div>
+
+          <ol class="stage-progress" aria-label="Этапы пути информации">
+            <li class="is-active">
+              <button type="button" data-stage-target="0" aria-current="step">
+                <span>01</span><strong>Поле</strong>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-stage-target="1">
+                <span>02</span><strong>Материал</strong>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-stage-target="2">
+                <span>03</span><strong>Смысл</strong>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-stage-target="3">
+                <span>04</span><strong>Событие</strong>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-stage-target="4">
+                <span>05</span><strong>Картина</strong>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-stage-target="5">
+                <span>06</span><strong>Вывод</strong>
+              </button>
+            </li>
+          </ol>
+
+          <div class="stage-viewport" aria-live="polite">
+            <article class="step story-stage stage-field is-active" data-stage="0">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>01</span> Находим сигнал</p>
+                <h1 id="journey-title">Один пост начинает <em>большое путешествие</em></h1>
+                <p class="stage-lead">
+                  Сервис видит не готовый вывод, а огромное информационное поле.
+                  Выберем одну публикацию и не потеряем её до самого финала.
+                </p>
+                <div class="stage-fact">
+                  <strong>74 158</strong>
+                  <span>поисковых совпадений в одном исследовании</span>
+                </div>
+              </div>
+
+              <div class="stage-visual field-visual" aria-hidden="true">
+                <div class="field-sun"></div>
+                <div class="field-cloud">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <p class="visual-callout callout-field"><span></span> За этим сигналом следим дальше</p>
+                <div class="traveler-anchor anchor-field" data-traveler-anchor>
+                  <article class="tracked-card">
+                    <span class="traveler-orbit"></span>
+                    <span class="traveler-spark" aria-hidden="true"></span>
+                    <div class="traveler-core">
+                      <span class="traveler-icon">VK</span>
+                      <p>
+                        <strong id="traveler-title">Пост найден</strong>
+                        <small id="traveler-note">сегодня · 09:42</small>
+                      </p>
+                    </div>
+                    <span class="traveler-status" id="traveler-status">Сигнал</span>
+                  </article>
+                </div>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="0"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+
+            <article class="step story-stage stage-material" data-stage="1" aria-hidden="true">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>02</span> Наводим порядок</p>
+                <h2>Из шума получается <em>полезный материал</em></h2>
+                <p class="stage-lead">
+                  Сервис очищает текст, проверяет связь с темой и складывает точные
+                  повторы вместе — без потери истории распространения.
+                </p>
+                <ul class="stage-pills" aria-label="Результат этапа">
+                  <li>релевантно теме</li>
+                  <li>1 · Уникальный материал</li>
+                  <li>5 размещений</li>
+                  <li>4 источника</li>
+                </ul>
+              </div>
+
+              <div class="stage-visual material-visual" aria-hidden="true">
+                <div class="echo-card echo-one"><i></i><i></i><i></i></div>
+                <div class="echo-card echo-two"><i></i><i></i><i></i></div>
+                <div class="echo-card echo-three"><i></i><i></i><i></i></div>
+                <div class="echo-card echo-four"><i></i><i></i><i></i></div>
+                <div class="filter-ring"><span>повторы вместе</span></div>
+                <div class="traveler-anchor anchor-material" data-traveler-anchor></div>
+                <p class="visual-callout callout-material">Пять размещений <b>≠</b> пять фактов</p>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="1"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+
+            <article class="step story-stage stage-meaning" data-stage="2" aria-hidden="true">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>03</span> Добавляем смысл</p>
+                <h2>Текст обретает <em>характер</em></h2>
+                <p class="stage-lead">
+                  Публикация становится структурированной информацией: понятно,
+                  о чём она, для кого и в каком контексте важна.
+                </p>
+                <p class="stage-quote">Не просто набор слов — часть исследуемой темы.</p>
+              </div>
+
+              <div class="stage-visual meaning-visual" aria-hidden="true">
+                <div class="meaning-orbit orbit-a"></div>
+                <div class="meaning-orbit orbit-b"></div>
+                <span class="meaning-chip chip-a">Доступность покупки</span>
+                <span class="meaning-chip chip-b">Ипотека</span>
+                <span class="meaning-chip chip-c">Покупатели жилья</span>
+                <span class="meaning-chip chip-d">Москва</span>
+                <span class="meaning-chip chip-e">Анализ рынка</span>
+                <div class="traveler-anchor anchor-meaning" data-traveler-anchor></div>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="2"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+
+            <article class="step story-stage stage-event" data-stage="3" aria-hidden="true">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>04</span> Собираем событие</p>
+                <h2>Разные тексты. <em>Один инфоповод.</em></h2>
+                <p class="stage-lead">
+                  Другие источники рассказывают о том же своими словами. Сервис
+                  притягивает связанные материалы и собирает событие целиком.
+                </p>
+                <div class="event-stats">
+                  <p><strong>8</strong><span>материалов</span></p>
+                  <p><strong>17</strong><span>размещений</span></p>
+                  <p><strong>11</strong><span>источников</span></p>
+                </div>
+              </div>
+
+              <div class="stage-visual event-visual" aria-hidden="true">
+                <div class="event-ray ray-a"></div>
+                <div class="event-ray ray-b"></div>
+                <div class="event-ray ray-c"></div>
+                <article class="source-bubble bubble-a"><span>Медиа</span><strong>Спрос на ипотеку охлаждается</strong></article>
+                <article class="source-bubble bubble-b"><span>Эксперт</span><strong>Одобрение кредита стало сложнее</strong></article>
+                <article class="source-bubble bubble-c"><span>Сообщество</span><strong>Покупатели обсуждают отказы</strong></article>
+                <div class="traveler-anchor anchor-event" data-traveler-anchor></div>
+                <p class="event-name"><span>Инфоповод</span> Банки стали чаще отказывать покупателям в ипотеке</p>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="3"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+
+            <article class="step story-stage stage-map" data-stage="4" aria-hidden="true">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>05</span> Меняем масштаб</p>
+                <h2>Теперь видно <em>всю повестку</em></h2>
+                <p class="stage-lead">
+                  Камера отъезжает: один инфоповод становится узлом большой карты.
+                  Наш материал остаётся подсвеченным внутри своего направления.
+                </p>
+                <div class="scale-story" aria-label="Масштаб исследования">
+                  <span><strong>74 158</strong> совпадений</span>
+                  <i>→</i>
+                  <span><strong>1 000</strong> материалов</span>
+                  <i>→</i>
+                  <span><strong>287</strong> инфоповодов</span>
+                </div>
+              </div>
+
+              <div class="stage-visual map-visual" aria-hidden="true">
+                <div class="agenda-island island-trust"><strong>Доверие</strong><i></i><i></i><i></i><i></i></div>
+                <div class="agenda-island island-access"><strong>Доступность покупки</strong><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="agenda-island island-future"><strong>Будущая среда</strong><i></i><i></i><i></i></div>
+                <div class="traveler-anchor anchor-map" data-traveler-anchor></div>
+                <p class="visual-callout callout-map"><span></span> Наш материал всё ещё здесь</p>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="4"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+
+            <article class="step story-stage stage-insight" data-stage="5" aria-hidden="true">
+              <div class="stage-copy">
+                <p class="eyebrow"><span>06</span> Получаем решение</p>
+                <h2>Картина становится <em>понятным действием</em></h2>
+                <p class="stage-lead">
+                  Ценность не в классификации самой по себе. Сервис связывает
+                  наблюдение, его смысл для задачи и возможный следующий шаг.
+                </p>
+                <p class="proof-note"><span>✓</span> Доказательная база · источник вывода можно открыть и проверить</p>
+              </div>
+
+              <div class="stage-visual insight-visual" aria-hidden="true">
+                <div class="insight-card insight-observe">
+                  <span>Что происходит</span>
+                  <p>Покупателей волнует не только цена, но и доступность всей покупки.</p>
+                </div>
+                <div class="insight-connector">↓</div>
+                <div class="insight-card insight-meaning">
+                  <span>Что это значит</span>
+                  <p>Цена за метр не отвечает на главный вопрос покупателя.</p>
+                </div>
+                <div class="insight-connector">↓</div>
+                <div class="insight-card insight-action">
+                  <span>Что с этим делать</span>
+                  <p>Показывать взнос, платёж и варианты для разных бюджетов.</p>
+                </div>
+                <div class="traveler-anchor anchor-insight" data-traveler-anchor></div>
+              </div>
+
+              <button
+                class="details-trigger"
+                type="button"
+                data-details="5"
+                aria-haspopup="dialog"
+                aria-controls="stage-details"
+              >
+                <span aria-hidden="true">+</span> Что происходит внутри
+              </button>
+            </article>
+          </div>
+
+          <nav class="journey-controls" aria-label="Управление историей">
+            <button class="journey-prev" type="button" disabled>
+              <span aria-hidden="true">←</span><strong>Назад</strong>
+            </button>
+            <p class="journey-caption">
+              <span>Сейчас</span>
+              <strong id="stage-caption">Находим публикацию</strong>
+            </p>
+            <button class="journey-next" type="button">
+              <span><small>Дальше</small><strong id="next-caption">Наводим порядок</strong></span>
+              <b aria-hidden="true">→</b>
+            </button>
+          </nav>
+
+          <p class="gesture-hint"><span aria-hidden="true">↔</span> На телефоне можно листать сцены свайпом</p>
+        </div>
+      </section>
+
+      <dialog
+        class="details-dialog"
+        id="stage-details"
+        aria-labelledby="details-title"
+        aria-describedby="details-lead"
+      >
+        <div class="details-dialog-inner">
+          <div class="details-dialog-head">
+            <p id="details-eyebrow">Технология этапа</p>
+            <button class="details-close" type="button" aria-label="Закрыть окно">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <h2 id="details-title"></h2>
+          <p class="details-lead" id="details-lead"></p>
+
+          <div class="details-transform" aria-label="Преобразование информации">
+            <div><span>На входе</span><strong id="details-input"></strong></div>
+            <b aria-hidden="true">→</b>
+            <div><span>На выходе</span><strong id="details-output"></strong></div>
+          </div>
+
+          <ul class="details-points" id="details-points"></ul>
+          <p class="details-note" id="details-note"></p>
+        </div>
+      </dialog>
+
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="closing-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+        <p class="eyebrow"><span>Финал</span> Не чёрный ящик</p>
+        <h2 id="closing-title">Весь путь можно пройти <em>в обратную сторону</em></h2>
+        <p class="closing-lead">
+          Вывод остаётся связан с инфоповодом, материалами и исходным постом.
+          Поэтому результат можно не только прочитать, но и проверить.
+        </p>
+
+        <ol class="traceback">
+          <li><span>01</span>Вывод</li>
+          <li><span>02</span>Общая картина</li>
+          <li><span>03</span>Инфоповод</li>
+          <li><span>04</span>Материал</li>
+          <li><span>05</span>Пост во ВКонтакте</li>
+        </ol>
+
+        <div class="before-after">
+          <article>
+            <p>На входе</p>
+            <strong>Один сырой пост среди десятков тысяч совпадений</strong>
+          </article>
+          <span aria-hidden="true">→</span>
+          <article>
+            <p>На выходе</p>
+            <strong>Понятный вывод с видимой доказательной базой</strong>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="#journey">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>vkboard</span>
+      </a>
+      <p>Информационное поле ВКонтакте → проверяемый аналитический результат</p>
+      <p class="footer-note">Демонстрационный кейс · числа условные</p>
+    </footer>
+  </body>
+</html>
