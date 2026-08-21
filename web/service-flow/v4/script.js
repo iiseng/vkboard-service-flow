@@ -4,6 +4,8 @@
   const journey = document.querySelector(".journey");
   const scene = document.querySelector("#tunnel-scene");
   const stagePanels = [...document.querySelectorAll("[data-stage-panel]")];
+  const chamberGates = [...document.querySelectorAll("[data-chamber]")];
+  const tunnelRings = [...document.querySelectorAll(".tunnel-ring")];
   const navItems = [...document.querySelectorAll(".depth-nav li")];
   const navButtons = [...document.querySelectorAll("[data-jump]")];
   const pageProgress = document.querySelector("#page-progress-bar");
@@ -16,6 +18,8 @@
   const coreTitle = document.querySelector("#core-title");
   const coreMeta = document.querySelector("#core-meta");
   const coreChange = document.querySelector("#core-change");
+  const nextStageName = document.querySelector("#next-stage-name");
+  const transitionStatus = document.querySelector("#transition-status");
   const detailsDialog = document.querySelector("#stage-details");
   const detailsTriggers = [...document.querySelectorAll("[data-details]")];
   const detailsClose = document.querySelector(".dialog-close");
@@ -27,6 +31,8 @@
   const detailsPoints = document.querySelector("#details-points");
   const detailsNote = document.querySelector("#details-note");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const shortStageNames = ["Поле", "Материал", "Смысл", "Событие", "Картина", "Вывод"];
 
   const stageVisuals = [
     {
@@ -179,6 +185,11 @@
   const clamp = (value, minimum, maximum) =>
     Math.max(minimum, Math.min(maximum, value));
 
+  const smoothstep = (start, end, value) => {
+    const progress = clamp((value - start) / (end - start), 0, 1);
+    return progress * progress * (3 - 2 * progress);
+  };
+
   const setHeaderIntro = () => {
     headerNumber.textContent = "00";
     headerName.textContent = "Перед погружением";
@@ -203,6 +214,10 @@
     coreTitle.textContent = visual.title;
     coreMeta.textContent = visual.meta;
     coreChange.textContent = visual.change;
+    nextStageName.textContent =
+      index < shortStageNames.length - 1
+        ? `Впереди: ${shortStageNames[index + 1]}`
+        : "Впереди: готовый вывод";
 
     stagePanels.forEach((panel, panelIndex) => {
       const isActive = panelIndex === index;
@@ -219,6 +234,74 @@
     });
   };
 
+  const updatePanels = (travelPosition, stageIndex) => {
+    stagePanels.forEach((panel, panelIndex) => {
+      const distance = panelIndex - travelPosition;
+      const absoluteDistance = Math.abs(distance);
+      const opacity = reducedMotion.matches
+        ? Number(panelIndex === stageIndex)
+        : 1 - smoothstep(0.12, 0.46, absoluteDistance);
+      const scale = distance < 0
+        ? 1 + Math.min(absoluteDistance, 1) * 0.12
+        : 1 - Math.min(absoluteDistance, 1) * 0.08;
+      const shift = clamp(distance, -1, 1) * 140;
+
+      panel.style.setProperty("--panel-opacity", opacity.toFixed(4));
+      panel.style.setProperty("--panel-scale", scale.toFixed(4));
+      panel.style.setProperty("--panel-shift", `${shift.toFixed(2)}px`);
+    });
+  };
+
+  const updateChambers = (travelPosition) => {
+    chamberGates.forEach((gate, gateIndex) => {
+      const distance = gateIndex - travelPosition;
+      let scale = 0.1;
+      let opacity = 0;
+
+      if (distance >= 0 && distance <= 2.3) {
+        scale = 1 / (1 + distance * 1.65);
+        opacity = clamp(0.62 - distance * 0.23, 0.08, 0.62);
+      } else if (distance < 0 && distance > -0.72) {
+        const passed = -distance;
+        scale = 1 + passed * 3.6;
+        opacity = clamp(0.62 - passed * 1.1, 0, 0.62);
+      }
+
+      const labelOpacity = distance < -0.08
+        ? 0
+        : clamp(0.82 - Math.abs(distance) * 0.38, 0, 0.82);
+      const turn = (gateIndex % 2 === 0 ? 1 : -1) * (gateIndex * 7 + travelPosition * 5);
+
+      gate.style.setProperty("--gate-scale", scale.toFixed(4));
+      gate.style.setProperty("--gate-opacity", opacity.toFixed(4));
+      gate.style.setProperty("--gate-label-opacity", labelOpacity.toFixed(4));
+      gate.style.setProperty("--gate-turn", `${turn.toFixed(2)}deg`);
+    });
+  };
+
+  const updateTunnelRings = (journeyRatio) => {
+    const ringTravel = journeyRatio * 12;
+    tunnelRings.forEach((ring, ringIndex) => {
+      const cycle = (ringTravel + ringIndex / tunnelRings.length) % 1;
+      const scale = 0.18 + cycle * 3.05;
+      const visibility = Math.sin(Math.PI * cycle) * 0.82;
+      const alpha = 0.18 + (1 - cycle) * 0.52;
+      const turn = journeyRatio * 150 + ringIndex * 17;
+
+      ring.style.setProperty("--ring-scale", scale.toFixed(4));
+      ring.style.setProperty("--ring-visibility", visibility.toFixed(4));
+      ring.style.setProperty("--ring-alpha", alpha.toFixed(4));
+      ring.style.setProperty("--ring-turn", `${turn.toFixed(2)}deg`);
+    });
+  };
+
+  const updateNavigationProgress = (travelPosition) => {
+    navItems.forEach((item, itemIndex) => {
+      const fill = clamp(travelPosition - itemIndex, 0, 1);
+      item.querySelector("button")?.style.setProperty("--step-fill", fill.toFixed(4));
+    });
+  };
+
   const updateScene = () => {
     updateFrame = 0;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -229,12 +312,35 @@
     const journeyTop = journey.getBoundingClientRect().top + window.scrollY;
     const journeyRange = Math.max(1, journey.offsetHeight - window.innerHeight);
     const journeyRatio = clamp((window.scrollY - journeyTop) / journeyRange, 0, 1);
-    const stageFloat = journeyRatio * (stageVisuals.length - 1);
-    const stageIndex = clamp(Math.round(stageFloat), 0, stageVisuals.length - 1);
-    const localProgress = clamp(stageFloat - stageIndex + 0.5, 0, 1);
+    const rawPosition = journeyRatio * (stageVisuals.length - 1);
+    const segmentIndex = Math.min(Math.floor(rawPosition), stageVisuals.length - 2);
+    const segmentProgress = journeyRatio >= 1 ? 1 : rawPosition - segmentIndex;
+    const transitionProgress = smoothstep(0.12, 0.88, segmentProgress);
+    const travelPosition = journeyRatio >= 1
+      ? stageVisuals.length - 1
+      : segmentIndex + transitionProgress;
+    const stageIndex = clamp(Math.round(travelPosition), 0, stageVisuals.length - 1);
+    const distanceToStage = Math.abs(travelPosition - stageIndex);
+    const transitionEnergy = Math.sin(distanceToStage * Math.PI);
+    const coreContentOpacity = 1 - smoothstep(0.23, 0.49, distanceToStage);
+    const coreScale = 0.94 + transitionEnergy * 0.16;
+    const cameraCycle = Math.sin(journeyRatio * Math.PI * 12) ** 2;
+
+    transitionStatus.textContent =
+      `${String(segmentIndex + 1).padStart(2, "0")} → `
+      + `${String(segmentIndex + 2).padStart(2, "0")} · ${shortStageNames[segmentIndex + 1]}`;
 
     scene.style.setProperty("--depth-progress", journeyRatio.toFixed(4));
-    scene.style.setProperty("--stage-progress", localProgress.toFixed(4));
+    scene.style.setProperty("--stage-progress", segmentProgress.toFixed(4));
+    scene.style.setProperty("--camera-cycle", cameraCycle.toFixed(4));
+    scene.style.setProperty("--transition-energy", transitionEnergy.toFixed(4));
+    scene.style.setProperty("--core-scale", coreScale.toFixed(4));
+    scene.style.setProperty("--core-content-opacity", coreContentOpacity.toFixed(4));
+
+    updatePanels(travelPosition, stageIndex);
+    updateChambers(travelPosition);
+    updateTunnelRings(journeyRatio);
+    updateNavigationProgress(travelPosition);
 
     if (window.scrollY < journeyTop - window.innerHeight * 0.08) {
       setHeaderIntro();
@@ -309,6 +415,7 @@
 
   window.addEventListener("scroll", requestSceneUpdate, { passive: true });
   window.addEventListener("resize", requestSceneUpdate, { passive: true });
+  reducedMotion.addEventListener?.("change", requestSceneUpdate);
   setStage(0);
   setHeaderIntro();
   updateScene();
